@@ -1,0 +1,41 @@
+NORMALIZAÇÃO:
+
+Serve para analisar tabelas e organizá-las de modo que a sua
+estrutura seja simples, relacional e estável, para que o gerenciamento
+possa ser também eficiente e seguro. 
+Os objetivos são: evitar a perda e a repetição da informação e atingir
+uma forma de representação adequada para o que se deseja armazenar. Evitar
+problema de redundância e anomalias de atualização, que podem estar presentes
+em uma entidade. A solução então é a decomposição de uma entidade em uma ou mais
+entidades, com base na aplicação das formas normais (FN).
+
+*É um conjunto de regras que expressam critérios práticos de simplificação de tabelas.
+
+Primeira FN:
+Exige que a tabela não tenha aninhamentos (atributos repetitivos).
+Realiza o que chamamos de nivelamento, gerando uma tabela com todos os dados coletados
+em atributos atômicos.
+A PK será formada pela composição da PK de cada tabela aninhada, além da PK da tabela externa.
+Caso existam atributos multivalorados, estes devem se tornar componentes da PK, uma vez que
+seus valores estarão associados várias vezes com os demais dados da tabela. Se ainda 
+existia aninhamento, provavelmente a primeira forma normal não é o estado final, uma
+vez que haverá muita redundância dos dados da tabela externa, quando se relacionam
+com ocorrências das tabelas internas ou vice-versa.
+Uma tabela está na primeira forma normal se nenhum dos seus atributos possui domínio
+multivalorado, ou seja, são eliminados itens repetitivos.
+
+Segunda FN:
+Dependência Funcional: sempre que um conjunto de um ou mais atributos determina o valor de
+outro conjunto de um ou mais atributos. 
+A regra diz que está na segunda forma normal se e somente se estiver na primeira forma normal 
+e todo atributo não chave depende funcionalmente de toda PK e não apenas de parte dela. Caso 
+seja verificado DF de parte da PK, gera-se uma tabela que tenha este atributo não chave e essa 
+parte da PK (que se torna agora a PK completa).
+Se existirem outros atributos não chave com DF dessa mesma PK, esses serão inseridos nesta nova
+tabela. O resultado dessa etapa é um conjunto de tabelas onde só existem DFs da PK completa.
+Obviamente, tabelas com PK simples ou que não possuem atributos não chave já estão automaticamente
+na segunda forma normal. Mesmo após a aplicação da segunda forma normal, podem ainda existir problemas
+de redundância e anomalias de atualização.
+Objetivo: evitar que se mantenha informações sobre um conjunto que tem intersecção com o conjunto
+representado na tabela, mas possui existência independente. Além da maior ocupação de espaço, a 
+redundância aumenta a possibilidade de incosistência.
