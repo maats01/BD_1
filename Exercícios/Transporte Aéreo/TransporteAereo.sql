@@ -1,6 +1,8 @@
 create schema TRANSPORTE_AEREO;
 use TRANSPORTE_AEREO;
 
+/*https://dev.mysql.com/doc/refman/8.0/en/stored-programs-defining.html*/
+
 create table AEROPORTOS
 (
 	ID int auto_increment primary key,
