@@ -1,3 +1,4 @@
+drop schema if exists TRANSPORTE_AEREO;
 create schema TRANSPORTE_AEREO;
 use TRANSPORTE_AEREO;
 
@@ -6,7 +7,6 @@ use TRANSPORTE_AEREO;
 create table AEROPORTOS
 (
 	ID int auto_increment primary key,
-    NOME varchar(255) not null,
     CIDADE varchar(255) not null,
     ESTADO varchar(255) not null,
     PAIS varchar(255) not null
@@ -15,29 +15,39 @@ create table AEROPORTOS
 create table PESSOAS
 (
 	ID int auto_increment primary key,
-    NOME varchar(255)
+    NOME_COMPLETO varchar(255)
 );
 
 create table TIPOS_AERONAVES
 (
 	ID int auto_increment primary key,
-    TIPO_DESC varchar(255)
+    TIPO varchar(255) not null,
+    DESC_TIPO varchar(255) not null
+);
+
+create table FABRICANTES
+(
+	ID int auto_increment primary key,
+    FABRICANTE varchar(255) not null
 );
 
 create table ASSENTOS
 (
 	ID int auto_increment primary key,
     LADO varchar(10),
-    POSICAO varchar(20),
+    POSICAO varchar(255),
     LINHA int not null
 );
 
 create table AERONAVES
 (
 	ID int auto_increment primary key,
+    MODELO varchar(100) not null,
+    ID_FABRICANTE int not null,
     ID_TIPO int not null,
     NUM_ASSENTOS int not null,
-    foreign key (ID_TIPO) references TIPOS_AERONAVES(ID)
+    foreign key (ID_TIPO) references TIPOS_AERONAVES(ID),
+    foreign key (ID_FABRICANTE) references FABRICANTES(ID)
 );
 
 create table PILOTOS
@@ -54,7 +64,8 @@ create table VOOS
     ID_AEROPORTO_DESTINO int not null,
     ID_AERONAVE int not null,
     ID_PILOTO int not null,
-    NUM_ASSENTOS_OCUPADOS int not null,
+    NUM_ASSENTOS_OCUPADOS int not null DEFAULT 0,
+    NUM_ASSENTOS_LIVRES int,
     HORARIO_SAIDA datetime not null,
     HORARIO_CHEGADA datetime not null,
     foreign key (ID_AEROPORTO_ORIGEM) references AEROPORTOS(ID),
@@ -72,10 +83,10 @@ create table PASSAGEIROS
 
 create table ASSENTOS_PASSAGEIROS_VOOS
 (
-	ID int auto_increment primary key,
     ID_VOO int not null,
     ID_ASSENTO int not null,
-    ID_PASSAGEIRO int,
+    ID_PASSAGEIRO int default null,
+    primary key (ID_VOO, ID_ASSENTO),
     foreign key (ID_VOO) references VOOS(ID),
     foreign key (ID_ASSENTO) references ASSENTOS(ID),
     foreign key (ID_PASSAGEIRO) references PASSAGEIROS(ID)
