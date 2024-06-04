@@ -8,7 +8,8 @@ conn = mysql.connector.connect(
     password="root",
     database="transporte_aereo"
 )
-# A -> 65
+
+
 cursor = conn.cursor()
 fake.name
 
