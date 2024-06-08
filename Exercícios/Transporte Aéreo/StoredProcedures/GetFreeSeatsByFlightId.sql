@@ -1,6 +1,6 @@
 DELIMITER //
 
-CREATE PROCEDURE GetFreeSeatsById
+CREATE PROCEDURE GetFreeSeatsByFlightId
 (IN Id int)
 BEGIN
 	SELECT
