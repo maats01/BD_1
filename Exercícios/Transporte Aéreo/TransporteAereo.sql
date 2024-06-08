@@ -99,7 +99,6 @@ create table ESCALAS
 
 create table VOOS_ESCALAS
 (
-	ID int auto_increment primary key,
     ID_VOO int not null,
     ID_ESCALA int not null,
     HORARIO_CHEGADA datetime not null,
