@@ -1,16 +1,5 @@
 use TRANSPORTE_AEREO;
 
-select * from aeroportos;
-select * from pessoas;
-select * from pilotos;
-select * from passageiros;
-select * from assentos;
-select * from aeronaves;
-select * from voos;
-select * from escalas;
-select * from voos_escalas;
-select * from assentos_passageiros_voos;
-
 /* INSERINDO VÔOS */
 INSERT INTO voos(ID_AEROPORTO_ORIGEM, ID_AEROPORTO_DESTINO, ID_AERONAVE, ID_PILOTO, HORARIO_SAIDA, HORARIO_CHEGADA) VALUES (1, 5, 2, 7, '2024-06-01 09:00:00', '2024-06-01 14:30:00');
 INSERT INTO voos(ID_AEROPORTO_ORIGEM, ID_AEROPORTO_DESTINO, ID_AERONAVE, ID_PILOTO, HORARIO_SAIDA, HORARIO_CHEGADA) VALUES (1, 3, 4, 1, '2024-06-05 15:00:00', '2024-06-05 19:30:00');
