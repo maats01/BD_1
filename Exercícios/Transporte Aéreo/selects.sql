@@ -4,10 +4,10 @@ SELECT * FROM VOOS;
 CALL GetAllPlanes();
  
 /* LISTAGEM DE VÔOS POR PERÍODO */
-CALL GetFlightsBetweenDates('2024-06-01', '2024-06-30');
+CALL GetFlightsBetweenDates('2024-05-01', '2024-05-30');
 
 /* LISTAGEM DE VÔOS QUE FAZEM ESCALA EM UM DETERMINADO LOCAL */
 CALL GetFlightsByScales(4);
 
 /* EXIBINDO ASSENTOS LIVRES EM UM DETERMINADO VOO */
-CALL GetFreeSeatsByFlightId(1);
+CALL GetFreeSeatsByFlightId(4);
