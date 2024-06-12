@@ -5,6 +5,7 @@ use TRANSPORTE_AEREO;
 create table AEROPORTOS
 (
 	ID int auto_increment primary key,
+    NOME_AEROPORTO varchar(255) not null,
     CIDADE varchar(255) not null,
     ESTADO varchar(255) not null,
     PAIS varchar(255) not null

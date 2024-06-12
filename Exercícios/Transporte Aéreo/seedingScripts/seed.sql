@@ -1,5 +1,24 @@
 use TRANSPORTE_AEREO;
 
+/* INSERINDO AEROPORTOS */
+INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) 
+VALUES ('Aeroporto de Guarulhos', 'São Paulo', 'São Paulo', 'Brasil');
+INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) 
+VALUES ('Aeroporto Internacional de Recife/Guararapes - Gilberto Freyre', 'Recife', 'Pernambuco', 'Brasil');
+INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) 
+VALUES ('Aeroporto Internacional de Congonhas', 'São Paulo', 'São Paulo', 'Brasil');
+INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) 
+VALUES ('Aeroporto Internacional de Brasília', 'Brasília', 'Distrito Federal', 'Brasil');
+INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) 
+VALUES ('Aeroporto Internacional do Rio de Janeiro/Galeão - Antônio Carlos Jobim', 'Rio de Janeiro', 'Rio de Janeiro', 'Brasil');
+INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) 
+VALUES ('Aeroporto Internacional Afonso Pena', 'São José dos Pinhais', 'Paraná', 'Brasil');
+INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) 
+VALUES ('Aeroporto Internacional de Salvador - Deputado Luís Eduardo Magalhães', 'Salvador', 'Bahia', 'Brasil');
+
+/* INSERINDO ESCALAS */
+INSERT INTO escalas(ID_AEROPORTO) VALUES(5), (3), (7), (2), (4), (1), (6);
+
 /* INSERINDO VÔOS */
 INSERT INTO voos(ID_AEROPORTO_ORIGEM, ID_AEROPORTO_DESTINO, ID_AERONAVE, ID_PILOTO, HORARIO_SAIDA, HORARIO_CHEGADA) VALUES (1, 5, 2, 7, '2024-06-01 09:00:00', '2024-06-01 14:30:00');
 INSERT INTO voos(ID_AEROPORTO_ORIGEM, ID_AEROPORTO_DESTINO, ID_AERONAVE, ID_PILOTO, HORARIO_SAIDA, HORARIO_CHEGADA) VALUES (1, 3, 4, 1, '2024-06-05 15:00:00', '2024-06-05 19:30:00');

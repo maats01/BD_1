@@ -43,14 +43,6 @@ cursor.execute("INSERT INTO aeronaves(MODELO, ID_FABRICANTE, ID_TIPO, NUM_ASSENT
 cursor.execute("INSERT INTO aeronaves(MODELO, ID_FABRICANTE, ID_TIPO, NUM_ASSENTOS) VALUES('747-8F', 2, 4, 0)")
 cursor.execute("INSERT INTO aeronaves(MODELO, ID_FABRICANTE, ID_TIPO, NUM_ASSENTOS) VALUES('An-124', 7, 4, 0)")
 
-# inserindo registros em aeroporto/escalas
-for _ in range(10):
-    city = fake.city()
-    state = fake.state()
-    country = fake.country()
-    cursor.execute(f"INSERT INTO aeroportos(CIDADE, ESTADO, PAIS) VALUES ('{city}', '{state}', '{country}')")
-    cursor.execute(f"INSERT INTO escalas(ID_AEROPORTO) VALUES ({cursor.lastrowid})")
-
 # inserindo registros em pessoas/pilotos/passageiros
 for i in range(600):
     name = fake.name()
