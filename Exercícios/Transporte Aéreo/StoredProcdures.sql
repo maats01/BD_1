@@ -26,16 +26,18 @@ BEGIN
 	WHERE
 		v.HORARIO_SAIDA BETWEEN pDateStart AND pDateEnd;
 END //
-/*
+
 CREATE PROCEDURE GetFlightsByScales
 (IN pCityOrState varchar(255), IN bTrueOrFalse bool)
 BEGIN
 	IF bTrueOrFalse THEN
-    /* pesquisa por cidade 
+		/* pesquisa por cidade */
 		SELECT 
 			v.ID AS VOO_ID,
 			aero_origem.NOME_AEROPORTO AS ORIGEM,
+			aero_origem.ESTADO AS ESTADO_ORIGEM,
 			aero_destino.NOME_AEROPORTO AS DESTINO,
+			aero_destino.ESTADO AS ESTADO_DESTINO,
 			v.ID_AERONAVE,
 			v.ID_PILOTO AS PILOTO,
 			v.NUM_ASSENTOS_OCUPADOS,
@@ -43,22 +45,43 @@ BEGIN
 			v.HORARIO_SAIDA,
 			v.HORARIO_CHEGADA
 		FROM
-			VOOS as v,
-			VOOS_ESCALAS as ves
+			VOOS AS v
+		INNER JOIN 
+			VOOS_ESCALAS AS ves
+		ON 
+			v.ID = ves.ID_VOO
+		INNER JOIN 
+			ESCALAS AS esc
+		ON 
+			ves.ID_ESCALA = esc.ID
+		INNER JOIN 
+			AEROPORTOS AS aero
+		ON 
+			esc.ID_AEROPORTO = aero.ID
 		INNER JOIN 
 			AEROPORTOS AS aero_origem
-		ON
+		ON 
 			v.ID_AEROPORTO_ORIGEM = aero_origem.ID
-		INNER JOIN
+		INNER JOIN 
 			AEROPORTOS AS aero_destino
-		ON
-			v.ID_AEROPORTO_DESTINO = aero_destino.ID;
+		ON 
+			v.ID_AEROPORTO_DESTINO = aero_destino.ID
+		WHERE 
+			aero.CIDADE = pCityOrState;
+		SELECT
+			*
+		FROM
+			AEROPORTOS
+		WHERE
+			AEROPORTOS.CIDADE = pCityOrState;
 	ELSE
-    /* pesquisa por estado 
+		/* pesquisa por estado */
 		SELECT 
 			v.ID AS VOO_ID,
 			aero_origem.NOME_AEROPORTO AS ORIGEM,
+			aero_origem.ESTADO AS ESTADO_ORIGEM,
 			aero_destino.NOME_AEROPORTO AS DESTINO,
+			aero_destino.ESTADO AS ESTADO_DESTINO,
 			v.ID_AERONAVE,
 			v.ID_PILOTO AS PILOTO,
 			v.NUM_ASSENTOS_OCUPADOS,
@@ -66,19 +89,38 @@ BEGIN
 			v.HORARIO_SAIDA,
 			v.HORARIO_CHEGADA
 		FROM
-			VOOS as v,
-			VOOS_ESCALAS as ves
+			VOOS AS v
+		INNER JOIN 
+			VOOS_ESCALAS AS ves
+		ON 
+			v.ID = ves.ID_VOO
+		INNER JOIN 
+			ESCALAS AS esc
+		ON 
+			ves.ID_ESCALA = esc.ID
+		INNER JOIN 
+			AEROPORTOS AS aero
+		ON 
+			esc.ID_AEROPORTO = aero.ID
 		INNER JOIN 
 			AEROPORTOS AS aero_origem
-		ON
+		ON 
 			v.ID_AEROPORTO_ORIGEM = aero_origem.ID
-		INNER JOIN
+		INNER JOIN 
 			AEROPORTOS AS aero_destino
-		ON
-			v.ID_AEROPORTO_DESTINO = aero_destino.ID;
+		ON 
+			v.ID_AEROPORTO_DESTINO = aero_destino.ID
+		WHERE 
+			aero.ESTADO = pCityOrState;
+		SELECT
+			*
+		FROM
+			AEROPORTOS
+		WHERE
+			AEROPORTOS.ESTADO = pCityOrState;
 	END IF;
 END //
-*/
+
 CREATE PROCEDURE GetFreeSeatsByFlightId
 (IN Id int)
 BEGIN

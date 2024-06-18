@@ -1,3 +1,5 @@
+CALL GetAllFlights();
+
 /* SELECIONANDO AERONAVES E ORDENANDO POR TIPO */
 CALL GetAllPlanes();
 
@@ -5,9 +7,10 @@ CALL GetAllPlanes();
 CALL GetFlightsBetweenDates('2024-05-01', '2024-05-31');
 
 /* LISTAGEM DE VÔOS QUE FAZEM ESCALA EM UM DETERMINADO LOCAL */
-CALL GetFlightsByScales(4);
+CALL GetFlightsByScales('Rio de Janeiro', true);
 
 /* EXIBINDO ASSENTOS LIVRES EM UM DETERMINADO VOO */
 CALL GetFreeSeatsByFlightId(3);
 
-CALL GetAllFlights();
+CALL GetFlightById(3);
+
