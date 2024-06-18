@@ -12,6 +12,18 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 fake.name
 
+# inserindo aeroportos
+cursor.execute("INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) VALUES ('Aeroporto de Guarulhos', 'São Paulo', 'São Paulo', 'Brasil')")
+cursor.execute("INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) VALUES ('Aeroporto Internacional de Recife/Guararapes - Gilberto Freyre', 'Recife', 'Pernambuco', 'Brasil')")
+cursor.execute("INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) VALUES ('Aeroporto Internacional de Congonhas', 'São Paulo', 'São Paulo', 'Brasil')")
+cursor.execute("INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) VALUES ('Aeroporto Internacional de Brasília', 'Brasília', 'Distrito Federal', 'Brasil')")
+cursor.execute("INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) VALUES ('Aeroporto Internacional do Rio de Janeiro/Galeão - Antônio Carlos Jobim', 'Rio de Janeiro', 'Rio de Janeiro', 'Brasil')")
+cursor.execute("INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) VALUES ('Aeroporto Internacional Afonso Pena', 'São José dos Pinhais', 'Paraná', 'Brasil')")
+cursor.execute("INSERT INTO aeroportos(NOME_AEROPORTO, CIDADE, ESTADO, PAIS) VALUES ('Aeroporto Internacional de Salvador - Deputado Luís Eduardo Magalhães', 'Salvador', 'Bahia', 'Brasil')")
+
+# inserindo escalas
+cursor.execute("INSERT INTO escalas(ID_AEROPORTO) VALUES (1), (2), (3), (4), (5), (6), (7)")
+
 # inserindo tipos de aeronaves
 cursor.execute("INSERT INTO tipos_aeronaves(TIPO, DESC_TIPO) VALUES('Jato Comercial', 'Aeronave de passageiros de grande porte')")
 cursor.execute("INSERT INTO tipos_aeronaves(TIPO, DESC_TIPO) VALUES('Jato Executivo', 'Aeronave de passageiros de pequeno porte')")
@@ -59,6 +71,22 @@ for i in range(80):
         actualPos = pos[j]
         cursor.execute(f"INSERT INTO assentos (LADO, POSICAO, LINHA) VALUES ('ESQUERDA', '{actualPos}', {i+1})")
         cursor.execute(f"INSERT INTO assentos (LADO, POSICAO, LINHA) VALUES ('DIREITA', '{actualPos}', {i+1})")
+
+# inserindo voos
+cursor.execute("INSERT INTO voos(ID_AEROPORTO_ORIGEM, ID_AEROPORTO_DESTINO, ID_AERONAVE, ID_PILOTO, HORARIO_SAIDA, HORARIO_CHEGADA) VALUES (1, 5, 2, 7, '2024-06-01 09:00:00', '2024-06-01 14:30:00')")
+cursor.execute("INSERT INTO voos(ID_AEROPORTO_ORIGEM, ID_AEROPORTO_DESTINO, ID_AERONAVE, ID_PILOTO, HORARIO_SAIDA, HORARIO_CHEGADA) VALUES (1, 3, 4, 1, '2024-06-05 15:00:00', '2024-06-05 19:30:00');")
+cursor.execute("INSERT INTO voos(ID_AEROPORTO_ORIGEM, ID_AEROPORTO_DESTINO, ID_AERONAVE, ID_PILOTO, HORARIO_SAIDA, HORARIO_CHEGADA) VALUES (2, 7, 1, 3, '2024-06-15 16:00:00', '2024-06-15 21:30:00')")
+cursor.execute("INSERT INTO voos(ID_AEROPORTO_ORIGEM, ID_AEROPORTO_DESTINO, ID_AERONAVE, ID_PILOTO, HORARIO_SAIDA, HORARIO_CHEGADA) VALUES (3, 4, 3, 10, '2024-05-01 18:00:00', '2024-05-01 02:30:00')")
+cursor.execute("INSERT INTO voos(ID_AEROPORTO_ORIGEM, ID_AEROPORTO_DESTINO, ID_AERONAVE, ID_PILOTO, HORARIO_SAIDA, HORARIO_CHEGADA) VALUES (4, 3, 5, 15, '2024-05-25 15:00:00', '2024-05-25 19:30:00')")
+cursor.execute("INSERT INTO voos(ID_AEROPORTO_ORIGEM, ID_AEROPORTO_DESTINO, ID_AERONAVE, ID_PILOTO, HORARIO_SAIDA, HORARIO_CHEGADA) VALUES (5, 6, 6, 4, '2024-05-28 13:00:00', '2024-05-28 18:30:00')")
+
+# inserindo relações de voos e escalas
+cursor.execute("INSERT INTO voos_escalas(ID_VOO, ID_ESCALA, HORARIO_CHEGADA, HORARIO_SAIDA) VALUES(1, 3, '2024-06-01 12:00:00', '2024-06-01 13:00:00')")
+cursor.execute("INSERT INTO voos_escalas(ID_VOO, ID_ESCALA, HORARIO_CHEGADA, HORARIO_SAIDA) VALUES(2, 6, '2024-06-05 16:45:00', '2024-06-05 17:45:00')")
+cursor.execute("INSERT INTO voos_escalas(ID_VOO, ID_ESCALA, HORARIO_CHEGADA, HORARIO_SAIDA) VALUES(3, 2, '2024-06-15 18:00:00', '2024-06-15 19:00:00')")
+cursor.execute("INSERT INTO voos_escalas(ID_VOO, ID_ESCALA, HORARIO_CHEGADA, HORARIO_SAIDA) VALUES(4, 4, '2024-05-01 19:30:00', '2024-05-01 20:45:00')")
+cursor.execute("INSERT INTO voos_escalas(ID_VOO, ID_ESCALA, HORARIO_CHEGADA, HORARIO_SAIDA) VALUES(4, 3, '2024-05-01 22:45:00', '2024-05-01 23:45:00')")
+cursor.execute("INSERT INTO voos_escalas(ID_VOO, ID_ESCALA, HORARIO_CHEGADA, HORARIO_SAIDA) VALUES(5, 4, '2024-05-25 17:00:00', '2024-05-25 17:45:00')")
 
 conn.commit()
 
