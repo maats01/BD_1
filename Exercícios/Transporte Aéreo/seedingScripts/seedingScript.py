@@ -9,7 +9,6 @@ conn = mysql.connector.connect(
     database="transporte_aereo"
 )
 
-
 cursor = conn.cursor()
 fake.name
 
