@@ -3,26 +3,46 @@ DELIMITER //
 CREATE PROCEDURE GetAllPlanes()
 BEGIN
 	SELECT 
-	MODELO,
-    FABRICANTE,
-    TIPO
-FROM
-	aeronaves as aero,
-    fabricantes as fab,
-    tipos_aeronaves as tipos
-WHERE
-	aero.id_fabricante = fab.id AND
-    tipos.id = aero.id_tipo
-ORDER BY
-	tipos.TIPO;
+		MODELO,
+		FABRICANTE,
+		TIPO,
+		NUM_ASSENTOS
+	FROM
+		AERONAVES AS aero,
+		FABRICANTES AS fab,
+		TIPOS_AERONAVES AS tipos
+	WHERE
+		aero.ID_FABRICANTE = fab.ID AND
+		tipos.ID = aero.ID_TIPO
+	ORDER BY
+		tipos.TIPO;
 END //
 
 CREATE PROCEDURE GetFlightsBetweenDates
 (IN pDateStart date, IN pDateEnd date)
 BEGIN
-	SELECT *
-    FROM
-		voos as v
+	SELECT 
+		v.ID AS VOO_ID,
+        aero_origem.NOME_AEROPORTO AS ORIGEM,
+        aero_origem.ESTADO AS ESTADO_ORIGEM,
+        aero_destino.NOME_AEROPORTO AS DESTINO,
+        aero_destino.ESTADO AS ESTADO_DESTINO,
+        v.ID_AERONAVE,
+        v.ID_PILOTO,
+        v.NUM_ASSENTOS_OCUPADOS,
+        v.NUM_ASSENTOS_LIVRES,
+        v.HORARIO_SAIDA,
+        v.HORARIO_CHEGADA
+	FROM
+        VOOS as v
+	INNER JOIN 
+		AEROPORTOS AS aero_origem
+	ON
+		v.ID_AEROPORTO_ORIGEM = aero_origem.ID
+	INNER JOIN
+		AEROPORTOS AS aero_destino
+	ON
+		v.ID_AEROPORTO_DESTINO = aero_destino.ID
 	WHERE
 		v.HORARIO_SAIDA BETWEEN pDateStart AND pDateEnd;
 END //
@@ -39,7 +59,7 @@ BEGIN
 			aero_destino.NOME_AEROPORTO AS DESTINO,
 			aero_destino.ESTADO AS ESTADO_DESTINO,
 			v.ID_AERONAVE,
-			v.ID_PILOTO AS PILOTO,
+			v.ID_PILOTO,
 			v.NUM_ASSENTOS_OCUPADOS,
 			v.NUM_ASSENTOS_LIVRES,
 			v.HORARIO_SAIDA,
@@ -125,24 +145,24 @@ CREATE PROCEDURE GetFreeSeatsByFlightId
 (IN Id int)
 BEGIN
 	SELECT
-		id_voo,
-		id_assento,
-		lado,
-		posicao,
-		linha
+		ID_VOO,
+		ID_ASSENTO,
+		LADO,
+		POSICAO,
+		LINHA
 	FROM
-		assentos as ass,
-		assentos_passageiros_voos as apv
+		ASSENTOS AS ass,
+		ASSENTOS_PASSAGEIROS_VOOS AS apv
 	WHERE
-		apv.id_voo = Id AND
-		apv.id_passageiro IS NULL AND
-		apv.id_assento = ass.id;
+		apv.ID_VOO = Id AND
+		apv.ID_PASSAGEIRO IS NULL AND
+		apv.ID_ASSENTO = ass.ID;
 	SELECT
-	num_assentos_livres
+		NUM_ASSENTOS_LIVRES
 	FROM
-		voos
+		VOOS
 	WHERE
-		voos.id = Id;
+		voos.ID = Id;
 END //
 
 CREATE PROCEDURE GetAllFlights()
@@ -154,7 +174,7 @@ BEGIN
         aero_destino.NOME_AEROPORTO AS DESTINO,
         aero_destino.ESTADO AS ESTADO_DESTINO,
         v.ID_AERONAVE,
-        v.ID_PILOTO AS PILOTO,
+        v.ID_PILOTO,
         v.NUM_ASSENTOS_OCUPADOS,
         v.NUM_ASSENTOS_LIVRES,
         v.HORARIO_SAIDA,
@@ -171,4 +191,48 @@ BEGIN
 		v.ID_AEROPORTO_DESTINO = aero_destino.ID;
 END //
 
+CREATE PROCEDURE GetFlightById
+(IN pId int)
+BEGIN
+	SELECT 
+		v.ID AS VOO_ID,
+        aero_origem.NOME_AEROPORTO AS ORIGEM,
+        aero_origem.ESTADO AS ESTADO_ORIGEM,
+        aero_destino.NOME_AEROPORTO AS DESTINO,
+        aero_destino.ESTADO AS ESTADO_DESTINO,
+        v.ID_AERONAVE,
+        v.ID_PILOTO,
+        v.NUM_ASSENTOS_OCUPADOS,
+        v.NUM_ASSENTOS_LIVRES,
+        v.HORARIO_SAIDA,
+        v.HORARIO_CHEGADA
+	FROM
+        VOOS as v
+	INNER JOIN 
+		AEROPORTOS AS aero_origem
+	ON
+		v.ID_AEROPORTO_ORIGEM = aero_origem.ID
+	INNER JOIN
+		AEROPORTOS AS aero_destino
+	ON
+		v.ID_AEROPORTO_DESTINO = aero_destino.ID
+	WHERE
+		v.ID = pId;
+END //
+
+CREATE PROCEDURE GetValuableCostumers
+(IN pLimit int)
+BEGIN
+	SELECT DISTINCT 
+		COUNT(ID_VOO) AS TOTAL_VOO, P.NOME_COMPLETO
+	FROM 
+		assentos_passageiros_voos AS APV
+	JOIN 
+		PESSOAS AS P 
+	ON 
+		APV.ID_PASSAGEIRO = P.ID
+	GROUP BY P.NOME_COMPLETO
+	ORDER BY TOTAL_VOO DESC
+	LIMIT pLimit;
+END //
 DELIMITER ;
